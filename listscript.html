@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<title>A Helpful List</title>
+		<link rel="stylesheet" type="text/css" href="liststyle.css">
+	</head>
+	<body>
+		<section>
+			<h1> Please enter your list item: </h1>
+			<input type="text" id="listPut">
+			<button id="addButt"> Submit </button>
+			<button id="clearButt"> Clear </button>
+			
+			<ul id="listZone"></ul>
+		</section>
+		<script>
+			let addButt = document.querySelector("#addButt")
+			let listInput = document.querySelector("#listPut")
+			let listZone = document.querySelector("#listZone")
+			let clearButt = document.querySelector("#clearButt")
+			let listItemCounter = 0
+			let maxItemNumber = 10
+			
+			addButt.addEventListener("click", function(){
+				let text = listInput.value;
+				let listItem = document.createElement('li')
+				if (listItemCounter < maxItemNumber && text.length <= 50 && text.length >=1){
+					listItem.innerHTML = text
+					listZone.appendChild(listItem)
+					listInput.value = ""
+					listItemCounter += 1
+				} else if (listItemCounter >= maxItemNumber){
+					alert("You've hit the item cap. Please clear your list to add more items.")
+				} else if (text.length < 1){
+					alert("List items should be at least one character long.")
+				} else {	
+					alert("Please keep list items under 50 characters.")
+				}
+			})
+			
+			clearButt.addEventListener("click", function(){
+				if (confirm("Are you sure you want to clear the whole list?")){
+					listZone.innerHTML=""
+					listItemCounter = 0
+					}
+			})
+			
+		</script>
+	</body>
+</html>
