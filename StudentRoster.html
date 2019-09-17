@@ -56,6 +56,7 @@
 		</table>
 		</section>
 		<script>
+			<!-- variable definition -->
 			let numberOfStudents = 0
 			let studentCount = document.querySelector("#student-count")
 			let studentList = document.querySelector("#student-list")
@@ -64,66 +65,43 @@
 			let studentGPA = document.querySelector("#student-gpa")
 			let addButt = document.querySelector("#add-student")
 			let removeButt = document.querySelector("#remove-selected-students")
-			studentCount.innerHTML = numberOfStudents
+			studentCount.innerHTML = numberOfStudents <!-- makes the studentCount start with the value of 0. -->
 			
-			addButt.addEventListener("click", function(){
-				let listElement = document.createElement("li")
-				listElement.classList.add("studentListItem")
-				listElement.addEventListener("click",function(){
-					if (listElement.classList.contains("selected")){
-						listElement.classList.remove("selected")
+			addButt.addEventListener("click", function(){ <!-- defines what happens when the add button is clicked. Every time it's clicked it: -->
+				let listElement = document.createElement("li") <!-- creates a list item element and stores it in a variable. -->
+				listElement.classList.add("studentListItem") <!-- gives that list item the class "studentListItem" -->
+				listElement.addEventListener("click",function(){ <!-- gives that list item an event listener that:-->
+					if (listElement.classList.contains("selected")){ <!-- checks to see if the list item already has the class "selected" -->
+						listElement.classList.remove("selected") <!-- and if so, it removes that class. -->
 					}else{
-						listElement.classList.add("selected")
+						listElement.classList.add("selected") <!--and if not, it adds that class -->
 					}
 				})
-				let studentNameText = studentName.value 
+				let studentNameText = studentName.value <!-- Next three lines are getting the values from the input fields and storing them in variables. -->
 				let studentIDText = studentID.value
 				let studentGPAText = studentGPA.value
-				if (studentNameText !== "" && studentIDText !== "" && studentGPAText >= 0 && studentGPAText <= 4) {
-					let newStudentEntry = studentNameText + ", ID: " + studentIDText + ", GPA: " + studentGPAText
-					listElement.innerHTML = newStudentEntry
-					studentList.appendChild(listElement)
-					studentName.value = ""
+				if (studentNameText !== "" && studentIDText !== "" && studentGPAText >= 0 && studentGPAText <= 4) { <!-- making sure that everything was filled out correctly--!>
+					let newStudentEntry = `${studentNameText}, ID: ${studentIDText}, GPA: ${studentGPAText}` <!-- putting the string we want to print into a variable. -->
+					listElement.innerHTML = newStudentEntry <!-- adding that string to the list item created above -->
+					studentList.appendChild(listElement) <!-- adding that list item to the studentList -->
+					studentName.value = "" <!-- reset everything back to empty -->
 					studentID.value = ""
 					studentGPA.value = ""
-					numberOfStudents += 1
-					studentCount.innerHTML = numberOfStudents
+					numberOfStudents += 1 <!-- ups the student counter. -->
+					studentCount.innerHTML = numberOfStudents <!-- recaculates what the studentCount should be desplaying -->
 				} else {
 					alert("Please enter a value for the Student Name and ID.\nPlease enter a number between 0 and 4 for the GPA.")
 				}
 			})
 			
-			removeButt.addEventListener("click", function removeElementsByClass(selected){
-					let elements = document.getElementsByClassName("selected")
-					while(elements.length > 0){
-						elements[0].parentNode.removeChild(elements[0])
-					numberOfStudents -= 1
+			removeButt.addEventListener("click", function removeElementsByClass(selected){ <!-- defines what to do if the remove button is clicked -->
+					let selectedItems = document.getElementsByClassName("selected") <!--creates a variable to store all the listItems with the selected class -->
+					while(selectedItems.length > 0){								<!-- basically: while there's still selected items -->
+						selectedItems[0].parentNode.removeChild(selectedItems[0]) <!-- delete a selected item -->
+					numberOfStudents -= 1											<!-- subtract one from numberOfStudents -->
 					}
-					studentCount.innerHTML = numberOfStudents					
+					studentCount.innerHTML = numberOfStudents					<!-- refresh studentCount -->
 				})
-			
-			
-			
-			/* Add the following functionality to this page
-			When the page loads
-				- Using JavaScript, display 0 in span#student-count
-			When button#add-students is clicked
-				- Read the value from the student-name input
-				- Read the value from the student-id input
-				- Read the value from the student-gpa input
-				- Create a new li element
-				- Set the new li element innerHTML to a string containing the student's name, id, and GPA
-					- for example "Beyonce Knowles, id: aa1234bb, GPA: 3.8"
-					- Use a template string  
-				- Add a click event handler to each li element. 
-					When a li element is clicked, add the class="selected" to that li element.
-					When a li element is clicked again, remove the class="selected" from that li element
-				- Add the new li element to ul#student-list element 
-				- Update the span#student-count value to the new number of students
-			When button#remove-selected-students is clicked, 
-				- remove all of the elements with the class="selected" from the list. 
-				
-			*/
 		</script>
 
 	</body>
